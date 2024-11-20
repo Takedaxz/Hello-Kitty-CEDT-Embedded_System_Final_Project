@@ -13,3 +13,11 @@ https://iotdesignpro.com/projects/diy-surveillance-cctv-camera-using-esp32cam-an
 ##Sending Email Alerts using ESP32 via SMTP Server
 <br>
 https://iotdesignpro.com/articles/sending-emails-using-esp32-via-smtp-server
+##ESP32-CAM Face Recognition Door Lock System
+<br>
+https://circuitdigest.com/microcontroller-projects/esp32-camface-recognition-door-lock-system
+<br>
+##Smart Wi-Fi Video Doorbell using ESP32 and Camera
+<br>
+https://circuitdigest.com/microcontroller-projects/esp32-camface-recognition-door-lock-system)](https://circuitdigest.com/microcontroller-projects/diy-smart-wifi-video-doorbell-using-esp32-and-camera
+<br>
