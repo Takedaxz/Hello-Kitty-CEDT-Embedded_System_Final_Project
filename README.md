@@ -20,5 +20,5 @@ https://circuitdigest.com/microcontroller-projects/esp32-camface-recognition-doo
 <br>
 ##Smart Wi-Fi Video Doorbell using ESP32 and Camera
 <br>
-https://circuitdigest.com/microcontroller-projects/esp32-camface-recognition-door-lock-system)](https://circuitdigest.com/microcontroller-projects/diy-smart-wifi-video-doorbell-using-esp32-and-camera
+https://circuitdigest.com/microcontroller-projects/diy-smart-wifi-video-doorbell-using-esp32-and-camera
 <br>
