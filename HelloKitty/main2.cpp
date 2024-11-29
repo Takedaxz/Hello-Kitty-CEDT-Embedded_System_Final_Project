@@ -48,20 +48,17 @@ void sendLineNotification(String message) {
 }
 
 void loop() {
-  // Example: send notification when motion is detected
-  int ldrValue = analogRead(LDR_PIN);
-  bool ldrOn = true; // Replace with actual motion sensor logic
-
-    if (ldrValue < 800) {
-    digitalWrite(LED_PIN, HIGH); // Turn on LED
+  bool text = true; 
+  Serial.println("Waiting for message...");
+  String check=Serial.readString();
+  if (check=="false") {
     
   } else {
-    digitalWrite(LED_PIN, LOW); // Turn off LED
-    ldrOn=false;
+    text=false;
   }
   
-  if (ldrOn) {
+  if (text) {
     sendLineNotification("🚨 Motion detected at your garage!");
-    delay(30000); // Avoid spamming
+    delay(3000);
   }
 }

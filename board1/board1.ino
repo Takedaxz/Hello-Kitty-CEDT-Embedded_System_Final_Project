@@ -9,6 +9,7 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>
 #include <SoftwareSerial.h>
+#include <HTTPClient.h>
 
 const int rxPin = 19;
 const int txPin = 21;
@@ -32,6 +33,7 @@ bool motionDetected = false;
 int check = 0;  
 unsigned long currentTime = millis();
 
+String lineToken = "9szxfrDJKWMtGkpO0txNctfrHGmsnKha8rYu6xfRKXj";
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -69,6 +71,29 @@ void sendSensorData() {
   //Blynk.virtualWrite(V1, humidity); // Send humidity to Virtual Pin V1
 }
 
+void sendLineNotification(String message) {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(115200);
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    http.begin("https://notify-api.line.me/api/notify");
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    http.addHeader("Authorization", "Bearer " + lineToken);
+
+    String payload = "message=" + message;
+    int httpResponseCode = http.POST(payload);
+    
+    if (httpResponseCode > 0) {
+      Serial.println("Notification sent: " + String(httpResponseCode));
+    } else {
+      Serial.println("Error sending notification: " + String(httpResponseCode));
+    }
+    http.end();
+  } else {
+    Serial.println("WiFi not connected");
+  }
+}
+
 void setup() {
   // Initialize serial communication
   Serial.begin(115200);
@@ -82,15 +107,20 @@ void setup() {
   dht.begin();
 
   // Connect to WiFi and Blynk
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
   //Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+  Serial.println("Connected to WiFi!");
   
   timer.setInterval(10000L, sendSensorData);
-
-
 
 }
 
 void loop() {
+  bool servoState = false;
   //Blynk.run();
   timer.run();
 
@@ -101,6 +131,7 @@ void loop() {
     if (receivedData == "true") {
       Serial.println("Password Correct! Opening Door...");
       myServo.write(90); // เปิดประตู
+      servoState = true;
       motionDetected = true;
       lastMotionTime = 0;
     }
@@ -116,8 +147,10 @@ void loop() {
     if (!motionDetected) {
       motionDetected = true;
       myServo.write(90);
+      servoState = true;
       lastMotionTime = currentTime;
       Serial.println("Motion detected");
+      sendLineNotification("🚨 Motion detected at your garage!");
     } else if (currentTime - lastMotionTime <= motionCheckInterval) {
       lastMotionTime = currentTime;
     } 
@@ -126,6 +159,7 @@ void loop() {
   if (motionDetected && currentTime - lastMotionTime > motionCheckInterval) {
     motionDetected = false;
     myServo.write(0);
+    servoState = false;
     lastMotionTime = 0;
     Serial.println("No Motion detected!");
     Serial.println("Closing the Door...!");
@@ -143,4 +177,11 @@ void loop() {
     digitalWrite(LED_PIN, LOW);
     Blynk.virtualWrite(V3, 0);  // ปิด LED
   }
+
+  if (servoState) {
+    sendLineNotification("🚨 Motion detected at your garage!");
+    servoState = false;
+    delay(3000);
+  }
+
 }
