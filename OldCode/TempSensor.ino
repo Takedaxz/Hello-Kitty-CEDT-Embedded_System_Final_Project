@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL68GxZvqfm"
-#define BLYNK_TEMPLATE_NAME "Temperature Sensor Template"
-#define BLYNK_AUTH_TOKEN "dfZ5qkbzl68zmTsVVgIWxSJHlw8E74Jn"
+#define BLYNK_TEMPLATE_ID "XXX"
+#define BLYNK_TEMPLATE_NAME "XXX"
+#define BLYNK_AUTH_TOKEN "XXX"
 
 #include <DHT.h>
 #include <WiFi.h>
