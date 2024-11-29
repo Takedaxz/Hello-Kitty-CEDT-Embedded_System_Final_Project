@@ -32,3 +32,4 @@
 *.app
 
 Key.txt
+.DS_Store
