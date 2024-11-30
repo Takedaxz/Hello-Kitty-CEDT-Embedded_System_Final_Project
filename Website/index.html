@@ -6,6 +6,9 @@
   <title>Smart Door Dashboard</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Sidebar -->
@@ -30,7 +33,7 @@
         <i class="fas fa-face-smile"></i>
         <div class="card-info">
           <h3>Face</h3>
-          <p><span class="status alert">Detected</span></p>
+          <p><span class="status alert"></span></p>
         </div>
       </div>
 
@@ -38,31 +41,31 @@
         <i class="fas fa-running"></i>
         <div class="card-info">
           <h3>Motion</h3>
-          <p><span class="status alert">Detected</span></p>
+          <p><span class="status alert"></span></p>
         </div>
       </div>
-      <div class="card" draggable="true">
+      <div class="card" draggable="true" id="card-humidity">
         <i class="fas fa-tint"></i>
         <div class="card-info">
           <h3>Humidity</h3>
-          <p>30%</p>
+          <p><span class="status"></span></p>
         </div>
       </div>
     </div>
 
     <div class="card-container">
-      <div class="card" draggable="true">
+      <div class="card" id="card-temperature" draggable="true">
         <i class="fas fa-thermometer-half"></i>
         <div class="card-info">
           <h3>Indoor Temperature</h3>
-          <p>25Â°C</p>
+          <p><span class="status"></span></p>
         </div>
       </div>
 
       <div class="card" draggable="true">
-        <i class="fas fa-lightbulb"></i>
+        <i class="fas fa-door-closed"></i>
         <div class="card-info">
-          <h3>LED</h3>
+          <h3>Control Door</h3>
           <div class="toggle active">
             <div class="knob"></div>
           </div>
@@ -71,23 +74,21 @@
 
       
 
-      <div class="card" draggable="true">
+      <div class="card" id="card-door" draggable="true">
         <i class="fas fa-door-open"></i>
         <div class="card-info">
           <h3>Door Status</h3>
-          <p><span class="status">Open</span></p>
+          <p><span class="status"></span></p>
         </div>
       </div>
     </div>
 
-    <div class="card-container">
+    <div class="card-container" id="card-light">
       <div class="card" draggable="true">
-        <i class="fas fa-sun"></i>
+        <i class="fas fa-lightbulb"></i>
         <div class="card-info">
-          <h3>Light Intensity</h3>
-          <div class="light-circle">
-            <div class="value">57%</div>
-          </div>
+          <h3>Light Status</h3>
+            <p><span class="status alert"></span></p>
         </div>
       </div>
 
@@ -96,10 +97,14 @@
         <div class="card-info">
           <h3>Live Camera</h3>
             <img src="https://e825-49-228-98-217.ngrok-free.app/video" alt="Video Stream" width="200px" height="150px" style="border-radius: 10px;"/>
-      </div> 
+        </div>
+      </div>
+
+      
     <div>
       
   </div>
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
