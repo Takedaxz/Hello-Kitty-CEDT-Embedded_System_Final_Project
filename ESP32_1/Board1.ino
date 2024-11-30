@@ -1,6 +1,6 @@
-#define BLYNK_TEMPLATE_ID "TMPL6HZsOE9vJ"
-#define BLYNK_TEMPLATE_NAME "board1 Template"
-#define BLYNK_AUTH_TOKEN "t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD"
+#define BLYNK_TEMPLATE_ID "XXX"
+#define BLYNK_TEMPLATE_NAME "XXX"
+#define BLYNK_AUTH_TOKEN "XXX"
 
 #include <DHT.h>
 #include <WiFi.h>
@@ -14,11 +14,11 @@
 const int rxPin = 19;
 const int txPin = 21;
 
-const String serverName = "https://script.google.com/macros/s/AKfycbwZtMbj_4Ni7Cg7Pv3BEGee1JRHQhiw_F4Xj7MPFpt2TK2fOemqdRaAzfzkAE1FFevt/exec";
+const String serverName = "XXX";
 
 SoftwareSerial serial2(rxPin, txPin);
 
-String lineToken = "9szxfrDJKWMtGkpO0txNctfrHGmsnKha8rYu6xfRKXj";
+String lineToken = "XXX";
 
 
 #define BLYNK_PRINT Serial
@@ -190,7 +190,7 @@ void loop() {
     Serial.println("Motion detected");
     Blynk.virtualWrite(V3, "Motion Detected!!"); // Send motionDetected to Virtual Pin V3
     sendDataToGoogleSheets(1, "Motion");
-    sendLineNotification("🚨 Motion detected at your garage! IP: http://127.0.0.1:5500/Hello-Kitty-CEDT-Embedded_System_Final_Project/Website/index.html");
+    sendLineNotification("🚨 Motion detected at your garage! IP: http://127.0.0.1:5500/Hello-Kitty-CEDT-Embedded_System_Final_Project/Website/index.html"); //Send notifications
     currentTime = millis();
     lastMotionTime = currentTime;
     
