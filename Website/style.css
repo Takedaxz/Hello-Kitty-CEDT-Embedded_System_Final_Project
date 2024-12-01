@@ -81,6 +81,16 @@
   .card-container .card:last-child {
     margin-right: 0;
   }
+
+  .date-time {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: right;
+  }
+  
   
   .card i {
     font-size: 32px;

@@ -60,6 +60,33 @@ const cards = document.querySelectorAll('.card');
       });
     });
 
+    function updateDateTime() {
+      const dateTimeElement = document.getElementById('dateTime');
+      const now = new Date();
+    
+      // Format date and time
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit', 
+        hour12: true 
+      };
+      const formattedDateTime = now.toLocaleString('en-US', options);
+    
+      // Update the element
+      dateTimeElement.textContent = formattedDateTime;
+    }
+    
+    // Update the date and time every second
+    setInterval(updateDateTime, 1000);
+    
+    // Initialize the clock
+    updateDateTime();
+    
     document.addEventListener("DOMContentLoaded", () => {
       // API URLs
       const faceApiUrl = "https://sgp1.blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V0";
