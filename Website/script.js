@@ -267,6 +267,64 @@ const cards = document.querySelectorAll('.card');
       setInterval(fetchMotionDetected, 2000);
       
     });
+
+    // import { initializeApp } from "firebase/app";
+    // import { getDatabase, ref, set } from "firebase/database";
+
+
+// Initialize Firebase as before
+const firebaseConfig = {
+  apiKey: "AIzaSyBNtpYJ-lvIY1hx0oxdaKeEqTReF_SrVkQ",
+  authDomain: "hello-kitty-16884.firebaseapp.com",
+  databaseURL: "https://hello-kitty-16884-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "hello-kitty-16884",
+  storageBucket: "hello-kitty-16884.firebasestorage.app",
+  messagingSenderId: "92183030484",
+  appId: "1:92183030484:web:5190288afa108b9781e941",
+  measurementId: "G-WV9B91H0K1"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Function to upload data to Firebase
+function uploadData() {
+  const timestamp = new Date().toISOString(); // Get the current timestamp in ISO format
+  
+  const data = {
+    timestamp: timestamp, // Add timestamp to the data
+    faceStatus: document.querySelector('#card-smile .status').textContent || 'No Status',
+    motionStatus: document.querySelector('#card-motion .status').textContent || 'No Motion',
+    humidity: document.querySelector('#card-humidity .status').textContent || '0%',
+    temperature: document.querySelector('#card-temperature .status').textContent || '0°C',
+    doorStatus: document.querySelector('#card-door .status').textContent || 'Closed',
+    lightStatus: document.querySelector('#card-light .status').textContent || 'Off'
+  };
+
+  db.ref('dashboard-data').push(data)
+    .then(() => {
+      console.log('Data uploaded successfully!');
+    })
+    .catch((error) => {
+      console.error('Error uploading data:', error);
+    });
+}
+
+// Create a MutationObserver to detect changes in status elements
+const observer = new MutationObserver(uploadData);
+
+// Target the elements to observe (all elements with the "status" class)
+const statusElements = document.querySelectorAll('.status');
+statusElements.forEach(element => {
+  observer.observe(element, {
+    characterData: true, // Observe text changes
+    subtree: true, // Observe children as well
+    childList: true // Observe added/removed nodes
+  });
+});
+
+
     
 
     
