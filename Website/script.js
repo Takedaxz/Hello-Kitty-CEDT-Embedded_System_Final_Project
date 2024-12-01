@@ -89,14 +89,14 @@ const cards = document.querySelectorAll('.card');
     
     document.addEventListener("DOMContentLoaded", () => {
       // API URLs
-      const faceApiUrl = "https://sgp1.blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V0";
-      const LEDApiUrl = "https://blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V4";
-      const doorApiUrl = "https://blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V6";
-      const motionApiUrl = "https://blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V5";
-      const tempApiUrl = "https://blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V2";
-      const humApiUrl = "https://blynk.cloud/external/api/get?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V3";
-      const doorOnApiUrl = "https://sgp1.blynk.cloud/external/api/update?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V1=1";
-      const doorOffApiUrl = "https://sgp1.blynk.cloud/external/api/update?token=BkZZ8vHJkh9fu4D7Y5Z8aQp1LR7KX1Ch&V1=0";
+      const faceApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V6";
+      const LEDApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V2";
+      const doorApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V4";
+      const motionApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V3";
+      const tempApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V0";
+      const humApiUrl = "https://blynk.cloud/external/api/get?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V1";
+      const doorOnApiUrl = "https://blynk.cloud/external/api/update?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V5=1";
+      const doorOffApiUrl = "https://blynk.cloud/external/api/update?token=t5ZCvJ0usmSk7sfhadPg4UUAYvvuVycD&V5=0";
 
       
       // Function to fetch Face Detected status
@@ -164,33 +164,70 @@ const cards = document.querySelectorAll('.card');
       async function fetchDoorDetected() {
         try {
           const response = await fetch(doorApiUrl);
-          const data = await response.json(); // Assuming the API returns JSON or a number
-          const doorDetected = data === 1 ? "Open" : "Close";
-    
+      
+          // Check if the response is OK
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          // Handle response depending on type
+          const data = await response.text(); // Change to response.json() if API returns JSON
+      
+          // Interpret the API response
+          const doorDetected = data.trim() === "Door is opening" ? "Open" : "Close";
+      
+          // Update the card status
           const cardDoor = document.getElementById("card-door");
-          const statusElement = cardDoor.querySelector(".status");
-          statusElement.textContent = doorDetected;
-          statusElement.className = `status ${doorDetected === "Open" ? "alert" : ""}`;
+          if (cardDoor) {
+            const statusElement = cardDoor.querySelector(".status");
+            if (statusElement) {
+              statusElement.textContent = doorDetected;
+              statusElement.className = `status ${doorDetected === "Open" ? "alert" : ""}`;
+            } else {
+              console.error("Status element not found inside card-door.");
+            }
+          } else {
+            console.error("Card with ID 'card-door' not found.");
+          }
         } catch (error) {
           console.error("Error fetching door detected status:", error);
         }
       }
-
+      
       // Function to fetch Motion Detected status
       async function fetchMotionDetected() {
         try {
           const response = await fetch(motionApiUrl);
-          const data = await response.json(); // Assuming the API returns JSON or a number
-          const motionDetected = data === 1 ? "Detected" : "Not Detected";
-    
+      
+          // Check if the response is OK
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          // Handle response assuming it's a plain string
+          const data = await response.text(); // Change to response.json() if API returns JSON
+      
+          // Interpret the API response
+          const motionDetected = data.trim() === "Motion Detected!!" ? "Detected" : "Not Detected";
+      
+          // Update the card status
           const cardMotion = document.getElementById("card-motion");
-          const statusElement = cardMotion.querySelector(".status");
-          statusElement.textContent = motionDetected;
-          statusElement.className = `status ${motionDetected === "Detected" ? "alert" : ""}`;
+          if (cardMotion) {
+            const statusElement = cardMotion.querySelector(".status");
+            if (statusElement) {
+              statusElement.textContent = motionDetected;
+              statusElement.className = `status ${motionDetected === "Detected" ? "alert" : ""}`;
+            } else {
+              console.error("Status element not found inside card-motion.");
+            }
+          } else {
+            console.error("Card with ID 'card-motion' not found.");
+          }
         } catch (error) {
           console.error("Error fetching motion detected status:", error);
         }
       }
+      
     
       // Function to toggle Door state
       async function toggleDoor(isOn) {
@@ -230,4 +267,6 @@ const cards = document.querySelectorAll('.card');
       setInterval(fetchMotionDetected, 2000);
       
     });
+    
+
     
